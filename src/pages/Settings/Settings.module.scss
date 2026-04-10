@@ -1,0 +1,21 @@
+.page {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: $page-padding-top $page-padding;
+  padding-bottom: calc($bottom-bar-height + 16px);
+}
+
+.logoutButton {
+  width: 100%;
+  margin-top: $spacing-xl;
+  background: $color-danger;
+  color: white;
+  border-radius: $radius-md;
+  padding: 16px;
+  font-size: $font-size-lg;
+  font-weight: 600;
+
+  &:active {
+    opacity: 0.85;
+  }
+}

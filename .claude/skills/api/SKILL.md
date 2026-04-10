@@ -1,3 +1,5 @@
+Documentação completa dos endpoints: @.claude/skills/api/API_DOCS.md
+
 # Skill: API
 
 Padrão de chamadas à API do Finança. Usa fetch nativo — sem axios ou libs externas.

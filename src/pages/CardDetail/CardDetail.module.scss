@@ -1,0 +1,6 @@
+.page {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: $page-padding-top $page-padding;
+  padding-bottom: calc($bottom-bar-height + 16px);
+}
