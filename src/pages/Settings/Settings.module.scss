@@ -2,9 +2,111 @@
   max-width: $max-width;
   margin: 0 auto;
   padding: $page-padding-top $page-padding;
-  padding-bottom: calc($bottom-bar-height + 16px);
+  padding-bottom: calc($bottom-bar-height + 24px);
 }
 
+.title {
+  font-size: $font-size-3xl;
+  font-weight: 700;
+  font-family: $font-display;
+  margin-bottom: $spacing-lg;
+}
+
+// ── Seções ────────────────────────────────────────────────────
+.sectionLabel {
+  font-size: $font-size-sm;
+  font-weight: 500;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: $spacing-lg 0 $spacing-xs $spacing-sm;
+}
+
+// ── Card de lista ────────────────────────────────────────────
+.card {
+  background: $color-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: 14px $spacing-md;
+  width: 100%;
+  background: transparent;
+  text-align: left;
+
+  &:active {
+    background: $color-background;
+  }
+}
+
+.rowIcon {
+  color: $color-primary;
+  flex-shrink: 0;
+}
+
+.rowLabel {
+  flex: 1;
+  font-size: $font-size-lg;
+  color: $color-text;
+}
+
+.rowChevron {
+  color: $color-text-muted;
+  flex-shrink: 0;
+}
+
+.rowMeta {
+  font-size: $font-size-md;
+  color: $color-text-muted;
+}
+
+.divider {
+  height: 0.5px;
+  background: $color-border;
+  margin-left: calc($spacing-md + 20px + $spacing-md);
+}
+
+// ── Toggle ────────────────────────────────────────────────────
+.toggle {
+  position: relative;
+  width: 51px;
+  height: 31px;
+  border-radius: $radius-full;
+  background: #E5E5EA;
+  flex-shrink: 0;
+  transition: background 200ms ease;
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.toggleOn {
+  background: $color-success;
+}
+
+.thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 27px;
+  height: 27px;
+  border-radius: $radius-full;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 200ms ease;
+
+  .toggleOn & {
+    transform: translateX(20px);
+  }
+}
+
+// ── Botão sair ────────────────────────────────────────────────
 .logoutButton {
   width: 100%;
   margin-top: $spacing-xl;

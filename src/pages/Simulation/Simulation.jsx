@@ -3,7 +3,13 @@ import styles from './Simulation.module.scss';
 export function Simulation() {
   return (
     <div className={styles.page}>
-      <h1>Simulação</h1>
+      <div className={styles.container}>
+        <span className={styles.emoji}>🚧</span>
+        <h1 className={styles.title}>Em construção</h1>
+        <p className={styles.subtitle}>
+          A simulação de compras parceladas está chegando em breve.
+        </p>
+      </div>
     </div>
   );
 }
