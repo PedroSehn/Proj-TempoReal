@@ -2,6 +2,13 @@ import { create } from 'zustand';
 import { authService } from '../services/auth.service';
 import { demoService } from '../services/demo.service';
 
+// Token de demo órfão (sessão anterior não foi encerrada corretamente)
+const storedToken = localStorage.getItem('financa_token');
+if (storedToken === 'demo-token' && !demoService.isDemo()) {
+  localStorage.removeItem('financa_token');
+  localStorage.removeItem('financa_user');
+}
+
 const useAuthStore = create((set, get) => ({
   user: JSON.parse(localStorage.getItem('financa_user') || 'null'),
   token: localStorage.getItem('financa_token') || null,

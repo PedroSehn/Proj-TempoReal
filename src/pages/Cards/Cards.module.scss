@@ -2,5 +2,267 @@
   max-width: $max-width;
   margin: 0 auto;
   padding: $page-padding-top $page-padding;
-  padding-bottom: calc($bottom-bar-height + 16px);
+  padding-bottom: calc($bottom-bar-height + 24px);
+}
+
+// ── Seletor de mês ──────────────────────────────────────────
+.monthSelector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.chevron {
+  color: $color-primary;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.monthLabel {
+  font-size: $font-size-xl;
+  font-weight: 600;
+  min-width: 160px;
+  text-align: center;
+}
+
+// ── Card de total ────────────────────────────────────────────
+.totalCard {
+  background: $color-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  padding: $spacing-lg;
+  text-align: center;
+  margin-bottom: $spacing-lg;
+}
+
+.totalLabel {
+  font-size: $font-size-md;
+  color: $color-text-muted;
+  margin-bottom: $spacing-xs;
+}
+
+.totalValue {
+  font-size: $font-size-big;
+  font-weight: 700;
+  font-family: $font-display;
+  color: $color-danger;
+  letter-spacing: -1px;
+}
+
+// ── Lista de cartões ─────────────────────────────────────────
+.cardsList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  margin-bottom: $spacing-md;
+}
+
+.cardItem {
+  display: flex;
+  flex-direction: column;
+}
+
+// ── Cartão físico ────────────────────────────────────────────
+.physicalCard {
+  border-radius: $radius-xl $radius-xl 0 0;
+  padding: $spacing-lg;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: $shadow-card-hover;
+  color: white;
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.cardEmoji {
+  font-size: $font-size-xl;
+}
+
+.cardName {
+  font-size: $font-size-lg;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.cardNumber {
+  font-size: $font-size-md;
+  letter-spacing: 3px;
+  opacity: 0.75;
+  font-family: $font-display;
+}
+
+// ── Info de fatura ────────────────────────────────────────────
+.cardInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  background: $color-card;
+  border-radius: 0 0 $radius-xl $radius-xl;
+  padding: $spacing-md $spacing-lg;
+  cursor: pointer;
+  box-shadow: $shadow-card-hover;
+
+  &:active {
+    background: $color-background;
+  }
+}
+
+.cardInfoLabel {
+  flex: 1;
+  font-size: $font-size-md;
+  color: $color-text-muted;
+  font-weight: 500;
+}
+
+.cardInfoValue {
+  font-size: $font-size-lg;
+  font-weight: 600;
+  color: $color-danger;
+}
+
+// ── Botão adicionar ──────────────────────────────────────────
+.addButton {
+  width: 100%;
+  padding: $spacing-md;
+  border: 2px dashed $color-border;
+  border-radius: $radius-lg;
+  background: transparent;
+  color: $color-text-muted;
+  font-size: $font-size-md;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  margin-top: $spacing-sm;
+
+  &:active {
+    opacity: 0.6;
+  }
+}
+
+// ── Estados ───────────────────────────────────────────────────
+.loading, .error {
+  text-align: center;
+  padding: $spacing-xl;
+  font-size: $font-size-md;
+  color: $color-text-muted;
+}
+
+.error { color: $color-danger; }
+
+.empty {
+  padding: $spacing-xl;
+  color: $color-text-muted;
+  font-size: $font-size-md;
+  text-align: center;
+}
+
+// ── Formulário (BottomSheet) ──────────────────────────────────
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding-bottom: $spacing-sm;
+}
+
+.formTitle {
+  font-size: $font-size-xl;
+  font-weight: 600;
+  margin-bottom: $spacing-xs;
+}
+
+.formRow {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.input {
+  background: $color-background;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: 12px 16px;
+  font-size: $font-size-lg;
+  width: 100%;
+
+  &:focus {
+    border-color: $color-primary;
+    outline: none;
+  }
+}
+
+.inputEmoji {
+  @extend .input;
+  width: 56px;
+  text-align: center;
+  font-size: $font-size-xl;
+  flex-shrink: 0;
+  padding: 12px 8px;
+}
+
+.flex1 { flex: 1; }
+
+// ── Color picker ──────────────────────────────────────────────
+.colorGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.colorLabel {
+  font-size: $font-size-md;
+  color: $color-text-muted;
+  font-weight: 500;
+}
+
+.colorPicker {
+  display: flex;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+}
+
+.colorOption {
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-full;
+  border: 3px solid transparent;
+  flex-shrink: 0;
+  transition: transform 150ms ease;
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.colorSelected {
+  border-color: $color-primary;
+  box-shadow: 0 0 0 2px white inset;
+}
+
+.formError {
+  color: $color-danger;
+  font-size: $font-size-sm;
+  text-align: center;
+}
+
+.buttonPrimary {
+  background: $color-primary;
+  color: white;
+  border-radius: $radius-md;
+  padding: 16px;
+  font-size: $font-size-lg;
+  font-weight: 600;
+  width: 100%;
+
+  &:active  { background: #0051D5; }
+  &:disabled { opacity: 0.6; }
 }

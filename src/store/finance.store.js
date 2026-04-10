@@ -1,7 +1,11 @@
 import { create } from 'zustand';
-import { expensesService } from '../services/expenses.service';
-import { incomesService } from '../services/incomes.service';
-import { cardsService } from '../services/cards.service';
+import { dashboardService } from '../services/dashboard.service';
+
+let debounceTimer = null;
+let currentRequestId = 0;
+const monthCache = {};
+
+const cacheKey = (year, month) => `${year}-${month}`;
 
 const useFinanceStore = create((set, get) => ({
   currentYear: new Date().getFullYear(),
@@ -14,8 +18,24 @@ const useFinanceStore = create((set, get) => ({
   error: null,
 
   setMonth: (year, month) => {
-    set({ currentYear: year, currentMonth: month });
-    get().fetchDashboard();
+    const cached = monthCache[cacheKey(year, month)];
+
+    if (cached) {
+      set({
+        currentYear: year,
+        currentMonth: month,
+        incomes: cached.incomes,
+        expenses: cached.expenses,
+        cards: cached.cards,
+        loading: false,
+        error: null,
+      });
+      return;
+    }
+
+    set({ currentYear: year, currentMonth: month, incomes: [], expenses: [], cards: [] });
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => get().fetchDashboard(), 300);
   },
 
   prevMonth: () => {
@@ -32,26 +52,29 @@ const useFinanceStore = create((set, get) => ({
 
   fetchDashboard: async () => {
     const { currentYear, currentMonth } = get();
+    const requestId = ++currentRequestId;
     set({ loading: true, error: null });
     try {
-      const [incomesRes, expensesRes, cardsRes] = await Promise.all([
-        incomesService.getByMonth(currentYear, currentMonth),
-        expensesService.getByMonth(currentYear, currentMonth),
-        cardsService.getWithTotal(currentYear, currentMonth),
-      ]);
-      set({
-        incomes: incomesRes.data,
-        expenses: expensesRes.data,
-        cards: cardsRes.data,
-        loading: false,
-      });
+      const { incomes, expenses, cards } = await dashboardService.getByMonth(currentYear, currentMonth);
+
+      if (requestId !== currentRequestId) return;
+
+      monthCache[cacheKey(currentYear, currentMonth)] = { incomes, expenses, cards };
+
+      set({ incomes, expenses, cards, loading: false });
     } catch (error) {
+      if (requestId !== currentRequestId) return;
       set({ error: error.message, loading: false });
     }
   },
 
-  totalIncomes: () => get().incomes.reduce((sum, i) => sum + i.value, 0),
-  totalExpenses: () => get().expenses.reduce((sum, e) => sum + e.value, 0),
+  invalidateCurrentMonth: () => {
+    const { currentYear, currentMonth } = get();
+    delete monthCache[cacheKey(currentYear, currentMonth)];
+  },
+
+  totalIncomes: () => get().incomes.reduce((sum, i) => sum + Number(i.value || 0), 0),
+  totalExpenses: () => get().expenses.reduce((sum, e) => sum + Number(e.value || 0), 0),
   totalCards: () => get().cards.reduce((sum, c) => sum + Number(c.total || 0), 0),
   balance: () => get().totalIncomes() - get().totalExpenses() - get().totalCards(),
 }));

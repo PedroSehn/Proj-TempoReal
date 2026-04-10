@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { Home, CreditCard, TrendingUp, Settings } from 'lucide-react';
 import styles from './Layout.module.scss';
 
@@ -10,6 +10,14 @@ const tabs = [
 ];
 
 export function Layout() {
+  const { pathname } = useLocation();
+
+  const isActive = (to) => {
+    if (to === '/') return pathname === '/';
+    if (to === '/cards') return pathname === '/cards' || pathname.startsWith('/card/');
+    return pathname.startsWith(to);
+  };
+
   return (
     <div className={styles.layout}>
       <main className={styles.main}>
@@ -21,10 +29,7 @@ export function Layout() {
           <NavLink
             key={to}
             to={to}
-            end={to === '/'}
-            className={({ isActive }) =>
-              `${styles.tab} ${isActive ? styles.active : ''}`
-            }
+            className={`${styles.tab} ${isActive(to) ? styles.active : ''}`}
           >
             <Icon size={24} />
             <span>{label}</span>
